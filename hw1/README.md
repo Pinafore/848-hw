@@ -3,10 +3,16 @@ Buzz When You Know: QuizBowl Feature Engineering
 
 The goal of this assignment is to understand the components of a simple QuizBowl QA system (i.e guesser, buzzer), analyze the data, and engineer a better Buzzer.
 
-### A quick review on the QuizBowl system:
+A quick review on the QuizBowl system:
+-
 There is a **Guesser**, which memorizes the questions and answers in the training set. For a new in-the-wild question, the guesser fetches the K closest questions in the memory and prepares the answers to those as potential responses. For this assignment, we use a [TF-IDF](https://www.wikiwand.com/en/Tf%E2%80%93idf) based Guesser provided in `tfidf_guesser.py`
 
 Along with the guesser, we have a **Buzzer**, which buzzes (gives off a binary signal) when the system is confident to respond with its guess. For this assignment, we will be using a simple Logistic Regression based Buzzer as provided in `lr_buzzer.py`.
+
+In practice, after each new word is consumed, the QB system tries to make new guesses using tfidf guesser over the already consumed prefix, and the Buzzer will go off if the confidence crosses the threshold, in this case 0.5
+
+What's the task?
+-
 
 You will build on the *tf-idf guesser* by extracting useful information from its guesses and generate better features for input into the *logistic regression* classifier to do a better job of selecting whether a guess to a question is correct.
 
@@ -21,13 +27,14 @@ What Can You Do?
 
 You can:
 * Add features in `write_guess_json` function in `feateng/feat_utils.py`
-* Change feature representations in `prepare_train_inputs` and `prepare_eval_input`
+* Change feature representations in `prepare_train_inputs` and `prepare_eval_input` functions.
 * Exclude training data 
 * Add training data
 
 What Can't You Do?
 -
 Remove tf-idf as guesser or logistic regression as buzzer.
+Change the logic of tfidf_guesser.py, lr_buzzer.py, qbdata.py
 
 
 How to start

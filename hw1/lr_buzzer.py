@@ -2,7 +2,7 @@ import argparse
 import itertools
 import json
 import pickle
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, SDGClassifier
 from typing import List
 from feateng import feat_utils
 import numpy as np
@@ -14,6 +14,7 @@ def read_vocab(filename:str):
 
 
 def create_train_dataset(vocab:List[str], filename:str):
+    """Creates and returns inputs and labels for Logistic Regression from a json."""
     with open(filename) as fp:
         records = [json.loads(line) for line in fp]
     return feat_utils.prepare_train_inputs(vocab, records)
@@ -64,12 +65,6 @@ if __name__ == "__main__":
                            type=str, default="data/small_guess.buzzdev.jsonl")
     argparser.add_argument("--vocab", help="Vocabulary that can be features",
                            type=str, default="data/small_guess.vocab")
-    argparser.add_argument("--n_epochs", help="Number of passes through train",
-                           type=int, default=5)
-    argparser.add_argument("--batch", help="Number of items in each batch",
-                           type=int, default=10)
-    argparser.add_argument("--learnrate", help="Learning rate for SGD",
-                           type=float, default=0.1)
     argparser.add_argument('--model_path', help="Path to save the Log Reg model.",
                             type=str, default="models/lr_buzzer.pickle")
 
