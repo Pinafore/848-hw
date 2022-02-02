@@ -79,5 +79,5 @@ if __name__ == "__main__":
     buzzer = LogRegBuzzer()
     buzzer.train(train_inputs, train_labels)
     buzzer.save(args.model_path)
-    print(buzzer.model.score(train_inputs, train_labels))
-    print(buzzer.model.score(dev_inputs, dev_labels))
+    print(f'Buzzer Train Accuracy: {buzzer.model.score(train_inputs, train_labels):.2f}')
+    print(f'Buzzer Dev Accuracy  : {buzzer.model.score(dev_inputs, dev_labels):.2f}')
