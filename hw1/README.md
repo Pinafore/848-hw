@@ -45,7 +45,7 @@ How to start
 4. Rinse and repeat!
 
 
-Accuracy (15+ points)
+Accuracy (25+ points)
 ------------------------------
 
 15 points of your score will be generated from your performance on the
@@ -56,7 +56,7 @@ You should be able to significantly
 improve on the baseline system.  If you can
 do much better than your peers, you can earn extra credit (up to 10 points).
 
-Analysis (10 Points)
+Analysis (25 Points)
 --------------
 
 The job of the written portion of the homework is to convince the grader that:
