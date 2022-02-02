@@ -144,10 +144,10 @@ class TfidfGuesser:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--guesstrain", default="data/small.guesstrain.json", type=str)
-    parser.add_argument("--guessdev", default="data/small.guessdev.json", type=str)
-    parser.add_argument("--buzztrain", default="data/small.buzztrain.json", type=str)
-    parser.add_argument("--buzzdev", default="data/small.buzzdev.json", type=str)
+    parser.add_argument("--guesstrain", default="../data/small.guesstrain.json", type=str)
+    parser.add_argument("--guessdev", default="../data/small.guessdev.json", type=str)
+    parser.add_argument("--buzztrain", default="../data/small.buzztrain.json", type=str)
+    parser.add_argument("--buzzdev", default="../data/small.buzzdev.json", type=str)
     parser.add_argument("--limit", default=-1, type=int)
     parser.add_argument("--num_guesses", default=5, type=int)
     parser.add_argument("--vocab", default="", type=str)

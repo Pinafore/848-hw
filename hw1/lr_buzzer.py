@@ -2,7 +2,7 @@ import argparse
 import itertools
 import json
 import pickle
-from sklearn.linear_model import LogisticRegression, SDGClassifier
+from sklearn.linear_model import LogisticRegression
 from typing import List
 from feateng import feat_utils
 import numpy as np
@@ -60,11 +60,11 @@ if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
     #''' Switch between the toy and REAL EXAMPLES
     argparser.add_argument("--buzztrain", help="Positive class",
-                           type=str, default="data/small_guess.buzztrain.jsonl")
+                           type=str, default="../data/small_guess.buzztrain.jsonl")
     argparser.add_argument("--buzzdev", help="Negative class",
-                           type=str, default="data/small_guess.buzzdev.jsonl")
+                           type=str, default="../data/small_guess.buzzdev.jsonl")
     argparser.add_argument("--vocab", help="Vocabulary that can be features",
-                           type=str, default="data/small_guess.vocab")
+                           type=str, default="../data/small_guess.vocab")
     argparser.add_argument('--model_path', help="Path to save the Log Reg model.",
                             type=str, default="models/lr_buzzer.pickle")
 
