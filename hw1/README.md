@@ -1,4 +1,4 @@
-Buzz When You Know: QuizBowl Feature Engineering
+Homework 1: Buzz When You Know — QuizBowl Feature Engineering
 =
 
 The goal of this assignment is to understand the components of a simple QuizBowl QA system (i.e guesser, buzzer), analyze the data, and engineer a better Buzzer.

@@ -68,10 +68,9 @@ def make_guess_dicts_from_question(question: qbdata.Question, guesser, run_lengt
     However, DO NOT add any label specific information as those would be removed explicitly
     and will be considered as breaking the Honor Code."""
     runs, _ = question.runs(run_length)
-    guesses = guesser.guess(runs, max_n_guesses=num_guesses)
+    runs_guesses = guesser.guess(runs, max_n_guesses=num_guesses)
 
-    for question_prefix in runs:
-        guesses = guesser.guess([question_prefix], max_n_guesses=num_guesses)[0]
+    for question_prefix, guesses in zip(runs, runs_guesses):
         for raw_guess in guesses:
             page_id, score = raw_guess
             guess = {
@@ -96,6 +95,8 @@ def write_guess_json(guesser, filename: str, questions: Iterable[qbdata.Question
 
     print("Writing guesses to %s" % filename)
 
+    string_buffer = []
+
     with open(filename, 'w') as outfile:
         for ques in tqdm(questions):
             guesses = make_guess_dicts_from_question(ques, guesser, run_length, num_guesses)
@@ -105,7 +106,7 @@ def write_guess_json(guesser, filename: str, questions: Iterable[qbdata.Question
                     # Don't let it use features that would allow cheating
                     if ii not in censor_features and ii not in vocab_set:
                         vocab_set[ii] = 1
-                outfile.write(json.dumps(guess, sort_keys=True))
-                outfile.write('\n')
+                string_buffer.append(json.dumps(guess))
+        outfile.write('\n'.join(string_buffer))
     print("")
     return [*vocab_set]
