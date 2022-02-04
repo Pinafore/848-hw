@@ -136,7 +136,7 @@ if __name__ == "__main__":
     jsonl_filename = 'outputs/guess_buzz_eval.jsonl'
     os.makedirs(os.path.dirname(jsonl_filename), exist_ok=True)
 
-    # feat_utils.write_guess_json(guesser, jsonl_filename, buzz_eval_questions)
+    feat_utils.write_guess_json(guesser, jsonl_filename, buzz_eval_questions)
 
     with open(jsonl_filename) as fp:
         all_guesses = [json.loads(line) for line in fp]
