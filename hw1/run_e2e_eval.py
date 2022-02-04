@@ -1,7 +1,9 @@
+import os
 import argparse
 import itertools
 import json
 import math
+from posixpath import dirname
 from tfidf_guesser import TfidfGuesser
 from lr_buzzer import LogRegBuzzer, read_vocab
 from qbdata import QantaDatabase
@@ -34,14 +36,26 @@ def compute_metrics(
         guess_vocab: List[str],
         buzzer: LogRegBuzzer, 
         penalize_incorrect_answers=False):
-    """Compute expected probability of winning across all examples by looking at the first buzz for each question.add()
-    For each question, we generate top guesses at different positions. 
-    
-    The Buzzer looks at the top guesses, considering the highest scored as the final prediction.
-    We stop looking for more when it buzzes, and evaluate whether the top guess at that point was indeed the correct guess.
-    However, we also consider that longer the buzzer waits, system's likelihood of being the first one to buzz drops. 
-    We reward expected score based on the winning_players_proportion(t) at that point.
-    An average across all examples in the eval set determines the final score.
+    """Computes four different metrics for the Guesser and Buzzer system:
+
+    Expected Probability of Winning: 
+        For each question, we generate top 5 guesses at different positions. The Buzzer looks at the top guesses, 
+        considering the highest scored as the final prediction, and decides when to buzz. We stop looking further when it buzzes, 
+        and evaluate whether the top guess at that point was indeed the correct guess.
+        However, the longer the buzzer waits, system's likelihood of being the first one to buzz drops. 
+        We reward expected score based on the winning_players_proportion(t) at that point (determined by human Quizbowl players).
+        An average across all examples in the eval set determines the final score.
+
+    Accuracy:
+        We only consider the first buzz and whether the top guess was correct and reward a full point if so. 
+        An average across all examples gives the accuracy.
+
+    Buzz Percept: (Fun metric)
+        What proportions of the total questions, did the system buzz at some point.
+
+    Mean Buzz Position: (Fun metric)
+        For all the questions that the system buzzed on, what is the mean relative position of the buzz.
+        (This can help you determine if you are buzzing too early or too late)
     """
     n_examples = len(true_labels)
 
@@ -119,9 +133,10 @@ if __name__ == "__main__":
     buzz_dataset = QantaDatabase(args.eval_dataset_path)
     buzz_eval_questions = buzz_dataset.buzz_dev_questions
 
-    jsonl_filename = 'guess_buzz_eval.jsonl'
+    jsonl_filename = 'outputs/guess_buzz_eval.jsonl'
+    os.makedirs(os.path.dirname(jsonl_filename), exist_ok=True)
 
-    feat_utils.write_guess_json(guesser, jsonl_filename, buzz_eval_questions)
+    # feat_utils.write_guess_json(guesser, jsonl_filename, buzz_eval_questions)
 
     with open(jsonl_filename) as fp:
         all_guesses = [json.loads(line) for line in fp]
