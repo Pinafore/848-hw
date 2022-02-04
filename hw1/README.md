@@ -82,8 +82,8 @@ for question_prefix in runs:
                 "score": score,
                 "label": question.page == page_id,
                 "category:%s" % question.category: 1,
-                "year:%s" % question.year: 1
-+               "question_text": question_prefix
+                "year:%s" % question.year: 1,
++               "question_text": question_prefix,
             }
             yield guess
 ```
@@ -106,7 +106,7 @@ During evaluation, we will use the question_text of the sub_example with maximum
 ```diff
     scores = [e['score'] for e in sub_examples]
     idx = np.argmax(scores)
-+   n_tokens =  n_tokens_feature(e[idx]['question_text'])
++   n_tokens =  n_tokens_feature(sub_examples[idx]['question_text'])
 -   input = np.array([1.0, scores[idx]], dtype=np.float32)
 +   input = np.array([1.0, scores[idx], n_tokens], dtype=np.float32)
     return input

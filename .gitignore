@@ -1,4 +1,5 @@
 __pycache__/
+*.pickle
 *.py[cod]
 *$py.class
 

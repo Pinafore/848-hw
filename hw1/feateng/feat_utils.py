@@ -1,5 +1,5 @@
 from tqdm import tqdm
-import json
+import json, math
 from collections import OrderedDict
 from typing import Iterable, Mapping, Any, List, Tuple
 import numpy as np
@@ -8,6 +8,9 @@ import qbdata
 
 kSEED = 1701
 kBIAS = "BIAS_CONSTANT"
+
+def n_tokens_feature(sent: str):
+    return math.log2(len(sent.split()))
 
 
 def prepare_train_inputs(vocab: List[str], examples: Iterable[Mapping[str, Any]]) -> Tuple[List[np.ndarray]]:
@@ -32,7 +35,7 @@ def prepare_train_inputs(vocab: List[str], examples: Iterable[Mapping[str, Any]]
     The logistic regression doesn't implicitly model intercept (or bias term), 
     it has to be explicitly provided as one of the input values.
     """
-    inputs = np.array([[1.0, e['score']] for e in examples], dtype=np.float32)
+    inputs = np.array([[1.0, e['score'], n_tokens_feature(e['question_text'])] for e in examples], dtype=np.float32)
     labels = np.array([e['label'] for e in examples], dtype=int)
     return inputs, labels
 
@@ -58,7 +61,9 @@ def prepare_eval_input(vocab: List[str], sub_examples: Iterable[Mapping[str, Any
     """
     scores = [e['score'] for e in sub_examples]
     idx = np.argmax(scores)
-    input = np.array([1.0, scores[idx]], dtype=np.float32)
+    n_tokens =  n_tokens_feature(sub_examples[idx]['question_text'])
+    # input = np.array([1.0, scores[idx]], dtype=np.float32)
+    input = np.array([1.0, scores[idx], n_tokens], dtype=np.float32)
     return input
 
 
@@ -80,7 +85,8 @@ def make_guess_dicts_from_question(question: qbdata.Question, guesser, run_lengt
                 "score": score,
                 "label": question.page == page_id,
                 "category:%s" % question.category: 1,
-                "year:%s" % question.year: 1
+                "year:%s" % question.year: 1,
+                "question_text": question_prefix,
             }
             yield guess
 
