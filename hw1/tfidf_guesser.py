@@ -70,7 +70,7 @@ class TfidfGuesser:
 
     def guess(self, questions: List[str], max_n_guesses: Optional[int]) -> List[List[Tuple[str, float]]]:
         """
-        Given the text of questions, generate guesses (a tuple, page id and score) for each one.
+        Given the text of questions, generate guesses (a tuple of page id and score) for each one.
 
         Keyword arguments:
         questions -- Raw text of questions in a list

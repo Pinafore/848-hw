@@ -14,7 +14,7 @@ def read_vocab(filename:str):
 
 
 def create_train_dataset(vocab:List[str], filename:str):
-    """Creates and returns inputs and labels for Logistic Regression from a json."""
+    """Creates and returns inputs and labels for Logistic Regression from a jsonline file, the output of the tfidf guesser."""
     with open(filename) as fp:
         records = [json.loads(line) for line in fp]
     return feat_utils.prepare_train_inputs(vocab, records)
