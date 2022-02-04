@@ -61,6 +61,58 @@ How to start
 4. Rinse and repeat!
 
 
+An example for adding a feature
+--------------------------------
+Let's try to add a simple feature: *how many space separated words have we encountered?* But, this can grow very quickly; let's take the logarithm of the count to the base 2 instead.
+
+What do we need for this feature? The input question text! 
+
+However we don't have that in the current version of the ***guess dict***. 
+
+Let's modify the `make_guess_dicts_from_question` function to include that in the guess dict:
+```diff
+for question_prefix in runs:
+        guesses = guesser.guess([question_prefix], max_n_guesses=num_guesses)[0]
+        for raw_guess in guesses:
+            page_id, score = raw_guess
+            guess = {
+                "id": question.qanta_id,
+                "guess:%s" % page_id: 1,
+                "run_length": len(question_prefix)/1000,
+                "score": score,
+                "label": question.page == page_id,
+                "category:%s" % question.category: 1,
+                "year:%s" % question.year: 1
++               "question_text": question_prefix
+            }
+            yield guess
+```
+
+We create this utility function to create the feature value from a string.
+```diff
++   def n_tokens_feature(sent: str):
++        return math.log2(len(sent.split()))
+```
+Now we need to modify the functions `prepare_train_inputs` and `prepare_eval_input` to use this feature's desired representation as input to our logistic regression.
+```diff
+-   inputs = np.array([[1.0, e['score']] for e in examples], dtype=np.float32)
++   inputs = np.array([[1.0, e['score'], n_tokens_feature(e['question_text'])] for e in examples], dtype=np.float32)
+    labels = np.array([e['label'] for e in examples], dtype=int)
+    return inputs, labels
+```
+
+During evaluation, we will use the question_text of the sub_example with maximum score. (Though for this particular feature, it doesn't matter which sub_example we choose).
+
+```diff
+    scores = [e['score'] for e in sub_examples]
+    idx = np.argmax(scores)
++   n_tokens =  n_tokens_feature(e[idx]['question_text'])
+-   input = np.array([1.0, scores[idx]], dtype=np.float32)
++   input = np.array([1.0, scores[idx], n_tokens], dtype=np.float32)
+    return input
+```
+That's it! Now we train the buzzer on our buzztrain data and evaluate end to end by running `run_e2e_evals.py` script.
+
 How is the performance of a QuizBowl system measured?
 ---
 Note that running `lr_buzzer.py` gives you the accuracy of your buzzer across all guesses. However, for a realtime Quizbowl system, it's also better to press the buzzer early on than later. We use the metric *expected_win_probability (EW)*  as defined in [Quizbowl: The Case for Incremental Question Answering](https://arxiv.orghttps://arxiv.org/pdf/1904.04792.pdf).
