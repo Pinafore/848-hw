@@ -130,9 +130,7 @@ How to Turn in Your System
 * You are only required to make code changes within `feateng` directory and provide trained TfidfGuesser model (as `tfidf.pickle`), LogRegBuzzer model as `lr_buzzer.pickle`, and guess vocab (as `guess.vocab`) within `models` directory. The file provided should take care of saving the trained model at it's required place.
 * You would not need to change any other python files, but feel free to play around with the code and make changes if needed. However, all the code changes outside of `feateng` would be discarded when submitted on gradescope and the Autograder would use the original version of the files provided in the repo.
 * `requirements.txt`: You will be given following packages in the runtime environment. If you want to use other python packages in your solution, please provide them in a `requirements.txt` file at the root level. However, you mostly won't be needing any additional packages, and installing these packages would be counted towards the submission runtime limit (40 minutes). Python Packages in environment:
-  * scikit-learn
-  * numpy
-  * nltk
+  * scikit-learn, scipy, numpy, nltk, tqdm
   
 **If you do not correctly save your trained model, or do not submit one at all, the autograder will fail.**
 * **Custom Training Data** (If you used additional training data beyond ``small.guesstrain.json`` or ``small.buzztrain.json``
