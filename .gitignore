@@ -1,4 +1,5 @@
 __pycache__/
+*.pickle
 *.py[cod]
 *$py.class
 
@@ -7,3 +8,5 @@ qanta.*.json
 .ipynb_checkpoints/
 
 *.ipynb
+
+.DS_Store
