@@ -3,10 +3,15 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+data/*
+outputs/
+models/
+
 qanta.*.json
 
 .ipynb_checkpoints/
 
 *.ipynb
 
+.vscode
 .DS_Store
