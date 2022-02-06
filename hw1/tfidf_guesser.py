@@ -144,16 +144,16 @@ class TfidfGuesser:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--guesstrain", default="../data/qanta.train.json", type=str)
-    parser.add_argument("--guessdev", default="../data/qanta.dev.json", type=str)
-    parser.add_argument("--buzztrain", default="../data/qanta.train.json", type=str)
-    parser.add_argument("--buzzdev", default="../data/qanta.dev.json", type=str)
+    parser.add_argument("--guesstrain", default="../data/small.guesstrain.json", type=str)
+    parser.add_argument("--guessdev", default="../data/small.guessdev.json", type=str)
+    parser.add_argument("--buzztrain", default="../data/small.buzztrain.json", type=str)
+    parser.add_argument("--buzzdev", default="../data/small.buzzdev.json", type=str)
     parser.add_argument("--limit", default=-1, type=int)
     parser.add_argument("--num_guesses", default=5, type=int)
     parser.add_argument("--vocab", default="models/guess.vocab", type=str)
     parser.add_argument("--model_path", default="models/tfidf_full.pickle", type=str)
-    parser.add_argument("--buzztrain_predictions", default="../data/large_guess.buzztrain.jsonl", type=str)
-    parser.add_argument("--buzzdev_predictions", default="../data/large_guess.buzzdev.jsonl", type=str)
+    parser.add_argument("--buzztrain_predictions", default="../data/small_guess.buzztrain.jsonl", type=str)
+    parser.add_argument("--buzzdev_predictions", default="../data/small_guess.buzzdev.jsonl", type=str)
     parser.add_argument("--show_confusion_matrix", default=False, type=bool)
 
     flags = parser.parse_args()
