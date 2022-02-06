@@ -87,6 +87,7 @@ for question_prefix in runs:
             }
             yield guess
 ```
+Every time we add a new item to the json in `make_guess_dicts_from_question`, we must run `tfidf_guesser.py` to generate the required files that becomes the inputs to our `lr_buzzer.py`.
 
 We create this utility function to create the feature value from a string.
 ```diff
@@ -112,6 +113,8 @@ During evaluation, we will use the question_text of the sub_example with maximum
     return input
 ```
 That's it! Now we train the buzzer on our buzztrain data and evaluate end to end by running `run_e2e_evals.py` script.
+
+Alternatively, you can just make the code changes and run `train_eval.sh` file with right modifications within to get the final scores on dev set.
 
 How is the performance of a QuizBowl system measured?
 ---

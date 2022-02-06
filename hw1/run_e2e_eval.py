@@ -1,9 +1,7 @@
 import os
+import os.path as osp
 import argparse
-import itertools
 import json
-import math
-from posixpath import dirname
 from tfidf_guesser import TfidfGuesser
 from lr_buzzer import LogRegBuzzer, read_vocab
 from qbdata import QantaDatabase
@@ -64,7 +62,7 @@ def compute_metrics(
     expected_win_prob = 0.0
     accuracy = 0.0
 
-    n_buzzes = 0
+    n_buzzes = 0.0
     mean_buzz_position = 0.0
 
     for guess in all_guesses:
@@ -102,12 +100,12 @@ def compute_metrics(
     if n_buzzes > 0:
         mean_buzz_position /= n_buzzes
     else:
-        mean_buzz_position = 0
+        mean_buzz_position = 0.0
 
     return {
-        'accuracy': accuracy * 100,
+        'accuracy': accuracy * 100.0,
         'expected_win_prob': expected_win_prob,
-        'buzz_percent': buzz_ratio * 100,
+        'buzz_percent': buzz_ratio * 100.0,
         'mean_buzz_position': mean_buzz_position,
         }
 
@@ -115,14 +113,14 @@ def compute_metrics(
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
-    argparser.add_argument("--guesser_model_path", help="Model path for TfidfGuesser",
+    argparser.add_argument("--guesser_model_path", help="Pickle file path for TfidfGuesser model.",
                            type=str, default="models/tfidf.pickle")
-    argparser.add_argument("--buzzer_model_path", help="Model path for LogRegBuzzer",
+    argparser.add_argument("--buzzer_model_path", help="Pickle file path for LogRegBuzzer model.",
                            type=str, default="models/lr_buzzer.pickle")
-    argparser.add_argument("--eval_dataset_path", help="Dataset Path for the eval dataset",
-                           type=str, default="../data/small.buzzdev.json")
-    argparser.add_argument("--vocab_path", help="Vocabulary that can be features",
-                           type=str, default="../data/small_guess.vocab")
+    argparser.add_argument("--eval_dataset_path", help="Dataset Path for the eval dataset. Must be Qanta Json format.",
+                           type=str, default="../data/qanta.dev.json")
+    argparser.add_argument("--vocab_path", help="Vocabulary that can be features.",
+                           type=str, default="models/guess.vocab")
     args = argparser.parse_args()
 
     guesser = TfidfGuesser.load(args.guesser_model_path)
@@ -134,9 +132,9 @@ if __name__ == "__main__":
     buzz_eval_questions = buzz_dataset.buzz_dev_questions
 
     jsonl_filename = 'outputs/guess_buzz_eval.jsonl'
-    os.makedirs(os.path.dirname(jsonl_filename), exist_ok=True)
+    os.makedirs(osp.dirname(jsonl_filename), exist_ok=True)
 
-    feat_utils.write_guess_json(guesser, jsonl_filename, buzz_eval_questions)
+    feat_utils.write_guess_json(guesser, jsonl_filename, buzz_eval_questions, batch_size=40)
 
     with open(jsonl_filename) as fp:
         all_guesses = [json.loads(line) for line in fp]

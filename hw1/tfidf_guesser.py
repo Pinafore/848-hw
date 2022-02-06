@@ -144,16 +144,17 @@ class TfidfGuesser:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--guesstrain", default="../data/small.guesstrain.json", type=str)
-    parser.add_argument("--guessdev", default="../data/small.guessdev.json", type=str)
-    parser.add_argument("--buzztrain", default="../data/small.buzztrain.json", type=str)
-    parser.add_argument("--buzzdev", default="../data/small.buzzdev.json", type=str)
+    parser.add_argument("--guesstrain", default="../data/qanta.train.json", type=str)
+    parser.add_argument("--guessdev", default="../data/qanta.dev.json", type=str)
+    parser.add_argument("--buzztrain", default="../data/qanta.train.json", type=str)
+    parser.add_argument("--buzzdev", default="../data/qanta.dev.json", type=str)
     parser.add_argument("--limit", default=-1, type=int)
     parser.add_argument("--num_guesses", default=5, type=int)
-    parser.add_argument("--vocab", default="", type=str)
-    parser.add_argument("--model_path", default="models/tfidf.pickle", type=str)
-    parser.add_argument("--buzztrain_predictions", default="", type=str)
-    parser.add_argument("--buzzdev_predictions", default="", type=str)
+    parser.add_argument("--vocab", default="models/guess.vocab", type=str)
+    parser.add_argument("--model_path", default="models/tfidf_full.pickle", type=str)
+    parser.add_argument("--buzztrain_predictions", default="../data/large_guess.buzztrain.jsonl", type=str)
+    parser.add_argument("--buzzdev_predictions", default="../data/large_guess.buzzdev.jsonl", type=str)
+    parser.add_argument("--show_confusion_matrix", default=False, type=bool)
 
     flags = parser.parse_args()
 
@@ -165,18 +166,25 @@ if __name__ == "__main__":
     tfidf_guesser.train(guesstrain, limit=flags.limit)
     tfidf_guesser.save(flags.model_path)
 
-    confusion = tfidf_guesser.confusion_matrix(guessdev, limit=-1)
-    print("Errors:\n=================================================")
-    for ii in confusion:
-        for jj in confusion[ii]:
-            if ii != jj:
-                print("%i\t%s\t%s\t" % (confusion[ii][jj], ii, jj))
+    if flags.show_confusion_matrix:
+        confusion = tfidf_guesser.confusion_matrix(guessdev, limit=-1)
+        print("Errors:\n=================================================")
+        for ii in confusion:
+            for jj in confusion[ii]:
+                if ii != jj:
+                    print("%i\t%s\t%s\t" % (confusion[ii][jj], ii, jj))
 
     
     if flags.buzztrain_predictions:
         print("Loading %s" % flags.buzztrain)
         buzztrain = QantaDatabase(flags.buzztrain)        
-        vocab = feat_utils.write_guess_json(tfidf_guesser, flags.buzztrain_predictions, buzztrain.buzz_train_questions, num_guesses=flags.num_guesses)
+        vocab = feat_utils.write_guess_json(
+            tfidf_guesser, 
+            flags.buzztrain_predictions, 
+            buzztrain.buzz_train_questions, 
+            num_guesses=flags.num_guesses,
+            batch_size=50,
+        )
 
     if flags.vocab:
         with open(flags.vocab, 'w') as outfile:
@@ -187,5 +195,11 @@ if __name__ == "__main__":
         assert flags.buzztrain_predictions, "Don't have vocab if you don't do buzztrain"
         print("Loading %s" % flags.buzzdev)    
         buzzdev = QantaDatabase(flags.buzzdev)
-        feat_utils.write_guess_json(tfidf_guesser, flags.buzzdev_predictions, buzzdev.buzz_dev_questions, num_guesses=flags.num_guesses)
+        feat_utils.write_guess_json(
+            tfidf_guesser, 
+            flags.buzzdev_predictions, 
+            buzzdev.buzz_dev_questions, 
+            num_guesses=flags.num_guesses,
+            batch_size=50,
+        )
     
