@@ -32,6 +32,15 @@ You can then talk about any limitations or problems the paper has.  Be
 honest but kind.  This might motivate a new extension / project based
 on the ideas of the paper.  Mention that at the end.
 
+How to Make Slides
+==================
+
+Please put your slides in this slide deck (in the chronological order
+of your slot):
+https://docs.google.com/presentation/d/1ZD8ENVXYKdzKqg1bw68Q5sSs2sMc_ERA9MpPPau0LQE/edit?usp=sharing
+
+It makes it much easier not to swap out presenters.
+
 How to Divide Work
 ==================
 It's fine to divide work however you want.  One person can make
