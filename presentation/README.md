@@ -40,8 +40,11 @@ three people can talk.  It's up to you, as long as the group agrees.
 
 Do you Have to Present on One of these Papers?
 ==============================================
-Nope!  Just get permission on Piazza for a different paper, and add it
-to the list.
+I have a list of paper ideas here:
+https://docs.google.com/spreadsheets/d/1QNU_Ci52WQn01d3L3e9CzrYaEZsHBRytyMIPa289cQs/edit?usp=sharing
+
+But you don't have to present one of these papers!  Just get
+permission on Piazza for a different paper, and add it to the list.
 
 How to sign up for a slot
 =========================
