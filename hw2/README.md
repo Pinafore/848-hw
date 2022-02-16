@@ -1,4 +1,4 @@
-Homework 2: Just pages are not enough! An extractive QA system.
+Homework 2: Just pages are not enough! An extractive approach to QA.
 =
 
 Prequisites:
@@ -8,8 +8,8 @@ Prequisites:
 * PyTorch and HuggingFace transformers library
 
 Problem Statement
---------
-The goal of this assingment is to develop an end to end QA system over QuizBowl dataset that incorporates the following:
+------------------
+The goal of this assignment is to develop an end to end QA system over QuizBowl dataset that incorporates the following:
 1. **A document retriever** that reads an open-domain question text and finds the page from a set of documents that is relevant and contains the answer. The retriever may have two sequential steps:
     1. Predict some top K wikipedia page-id guesses using a TF-IDF (or better) guesser.
     2. Rerank the top guesses using a BERT based **Reranker** and output the best page.
@@ -31,7 +31,7 @@ What is provided?
 -
 We provide you a skeleton codebase that trains the tfidf guesser (like in HW1), loads some pretrained BERT-based models for other components and finally run an end to end evaluation of the QuizBowl system.
 
-File Descriptions:
+### **File Descriptions:**
 
 * `base_models.py`: Contains the abstract base classes that provides an idea of High Level API for each component. This is very barebones. Though you are not required to change this, but you may.
 
@@ -53,7 +53,17 @@ File Descriptions:
 
 * `outputs/`All model predictions must go in this directory.
 
-Who do I need to do?
+### **Pretrained Models:**
+
+We provide following pretrained huggingface models for ReRanker and Answer Extractor:
+
+* [`amberoad/bert-multilingual-passage-reranking-msmarco`:](https://huggingface.co/amberoad/bert-multilingual-passage-reranking-msmarco) This module takes a search query [1] and a passage [2] and calculates if the passage matches the query. This model is trained using the Microsoft MS Marco Dataset. This training dataset contains approximately 400M tuples of a query, relevant and non-relevant passages. You may change this base pretrained model provided to you, but you need to finetune on the Quizbowl examples. We use this model to solve a Sentence Classification Task: Are given two inputs related or not?
+
+* [`csarron/bert-base-uncased-squad-v1`](https://huggingface.co/csarron/bert-base-uncased-squad-v1) This model was fine-tuned from the HuggingFace BERT base uncased checkpoint on SQuAD1.1. This model is case-insensitive: it does not make a difference between english and English. Similar to above model, you need to finetune this over QuizBowl examples to achieve better performance on Answer Extraction Task.
+
+
+
+What do I need to do?
 --------------------
 
 Your task is to pick any (or all) of the three below items to better the performance of the QuizBowl System as measured by Exact Match (EM) Accuracy and F1 score for the first and last sentence of the question text.

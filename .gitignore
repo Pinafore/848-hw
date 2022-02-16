@@ -3,9 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# HW2
 data/*
-outputs/
-models/
+outputs/*sent_predictions.json
+models/tfidf.pickle
 
 qanta.*.json
 
