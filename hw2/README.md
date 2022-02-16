@@ -18,7 +18,6 @@ The goal of this assignment is to develop an end to end QA system over QuizBowl 
 The performace of the system will be measured using two metrics:
 * mean accuracy over **_Exact Match_** (1 point if the prediction exactly matches the answer), and
 * mean **_F1 score_** (over the answer tokens and prediction tokens). 
-* Retriever Accuracy (Accuracy of returning the correct page for each question)
 
 We will also use two settings to measure this performance:
 * **_First Sentence predictions_** (System only tries to answer the question after reading the first sentence.)
