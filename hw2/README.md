@@ -118,32 +118,27 @@ Some Tutorial Links:
 - [Using PretrainedTokenizer for corresponding models](https://huggingface.co/docs/transformers/main_classes/tokenizer#transformers.PreTrainedTokenizer)
 - [Facebook Faiss Library for efficient similarity search and clustering of dense vectors.](https://github.com/facebookresearch/faiss/wiki/Getting-started)
 
-Leaderboard Score (25+ points)
+Leaderboard Score (40+ points)
 ------------------------------
 
-25 points of your score will be generated from your performance on the
+40 points of your score will be generated from your performance on the
 answer prediction competition on the leaderboard. The performance will be
 evaluated considering F1 score for both first and last sentence setting 
 on a held-out test set. If you are choosing to focus more on improving the retriever using dense representations of the documents, we will weigh more on the Retriever Accuracy.
 
 If you can do much better than your peers, you can earn extra credit (up to 10 points).
 
-Analysis (25 Points)
+Analysis (10 Points) [Keep it very consice]
 --------------
 
 The job of the written portion of the homework is to convince the grader that:
 * Your approach and intuition works.
 * You understand how and to what extent are each component contributing the final score.
-* You had a clear methodology for incorporating changes "input design", model selection, data used.
+* You had a clear methodology for incorporating changes in "model-input design", model selection, data used, etc.
 
 Make sure that you have examples and quantitative evidence that your approach is working well, and include the metrics you chose to measure your system's performance. Be sure to explain how used the data
 (e.g., did you have a development set?) and how you inspected the
 results.
-
-A sure way of getting a low grade is simply listing what you tried and
-reporting the corresponding metrics for each attempt.  You are expected to pay more
-attention to what is going on with the data and take a data-driven
-approach.
 
 How to Turn in Your System
 ---------------------------
