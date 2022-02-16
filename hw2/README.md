@@ -92,6 +92,8 @@ wget "https://s3-us-west-2.amazonaws.com/pinafore-us-west-2/qanta-jmlr-datasets/
 wget "https://s3-us-west-2.amazonaws.com/pinafore-us-west-2/datasets/wikipedia/wiki_lookup.json"
 ```
 
+You can also use [qanta dataset](https://huggingface.co/datasets/qanta) from the huggingface `datasets` library.
+
 The leaderboard score that determines the grade will be evaluated on a held-out test data that will be provided toward the end of the homework deadline which you all will use to submit the answers predictions in a json format.
 
 
