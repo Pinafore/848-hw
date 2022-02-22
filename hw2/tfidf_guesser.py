@@ -26,7 +26,7 @@ class TfidfGuesser(BaseGuesser):
         self.tfidf_matrix = None
         self.i_to_ans = None
 
-    def train(self, training_data: Union[StubDatabase, QantaDatabase], limit=-1) -> None:
+    def train(self, training_data: QantaDatabase, limit: int=-1) -> None:
         """
         Use a tf-idf vectorizer to analyze a training dataset and to process
         future examples.

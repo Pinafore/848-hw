@@ -1,6 +1,6 @@
 import argparse
-import colored_traceback
-colored_traceback.add_hook()
+# import colored_traceback
+# colored_traceback.add_hook()
 
 import json
 from tqdm import tqdm
