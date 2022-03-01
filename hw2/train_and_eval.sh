@@ -5,7 +5,7 @@ data_dir="../data"
 mkdir -p models
 
 # Download the full train data
-if [ ! -f "${data_dir}/qanta.2018.train.json" ]; then
+if [ ! -f "${data_dir}/qanta.train.2018.json" ]; then
     echo "Downloading qanta.train.2018.04.18.json as full train set."
     wget "https://s3-us-west-2.amazonaws.com/pinafore-us-west-2/qanta-jmlr-datasets/qanta.train.2018.04.18.json"
     mv qanta.train.2018.04.18.json "${data_dir}/qanta.train.2018.json"
@@ -13,7 +13,7 @@ if [ ! -f "${data_dir}/qanta.2018.train.json" ]; then
 fi
 
 # Download the full dev data
-if [ ! -f "${data_dir}/qanta.2018.dev.json" ]; then
+if [ ! -f "${data_dir}/qanta.dev.2018.json" ]; then
     echo "Downloading qanta.dev.2018.04.18.json as full dev set."
     wget "https://s3-us-west-2.amazonaws.com/pinafore-us-west-2/qanta-jmlr-datasets/qanta.dev.2018.04.18.json"
     mv qanta.dev.2018.04.18.json "${data_dir}/qanta.dev.2018.json"
