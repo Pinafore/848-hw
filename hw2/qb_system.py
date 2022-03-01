@@ -7,12 +7,11 @@ from tfidf_guesser import TfidfGuesser
 from models import AnswerExtractor, Retriever, ReRanker, WikiLookup
 
 
-
 class QuizBowlSystem:
 
-    def __init__(self) -> None:
+    def __init__(self, wiki_lookup_path: str = '../data/wiki_lookup.2018.json') -> None:
         """Fill this method to create attributes, load saved models, etc
-        Don't have any arguments to this constructor. 
+        Don't add any other arguments to this constructor. 
         If you really want to have arguments, they should have some default values set.
         """
         guesser = TfidfGuesser()
@@ -20,25 +19,26 @@ class QuizBowlSystem:
         guesser.load('models/tfidf.pickle')
 
         print('Loding the Wiki Lookups...')
-        self.wiki_lookup = WikiLookup('../data/wiki_lookup.2018.json')
+        self.wiki_lookup = WikiLookup(wiki_lookup_path)
 
         reranker = ReRanker()
         print('Loading the Reranker model...')
         reranker.load('amberoad/bert-multilingual-passage-reranking-msmarco')
-        
+
         self.retriever = Retriever(guesser, reranker, wiki_lookup=self.wiki_lookup)
-        
+
         answer_extractor_base_model = "csarron/bert-base-uncased-squad-v1"
         self.answer_extractor = AnswerExtractor()
         print('Loading the Answer Extractor model...')
         self.answer_extractor.load(answer_extractor_base_model)
-        
+
     def retrieve_page(self, question: str, disable_reranking=False) -> str:
         """Retrieves the wikipedia page name for an input question."""
         with torch.no_grad():
-            page = self.retriever.retrieve_answer_document(question, disable_reranking=disable_reranking)
+            page = self.retriever.retrieve_answer_document(
+                question, disable_reranking=disable_reranking)
             return page
-    
+
     def execute_query(self, question: str, *, get_page=True) -> str:
         """Populate this method to do the following:
         1. Use the Retriever to get the top wikipedia page.
@@ -47,8 +47,9 @@ class QuizBowlSystem:
         with torch.no_grad():
             page = self.retrieve_page(question, disable_reranking=True)
             reference_text = self.wiki_lookup[page]['text']
-            answer = self.answer_extractor.extract_answer(question, reference_text)[0] # singleton list
-            return answer, page if get_page else answer
+            answer = self.answer_extractor.extract_answer(
+                question, reference_text)[0]  # singleton list
+            return (answer, page) if get_page else answer
 
 
 if __name__ == "__main__":
@@ -58,8 +59,3 @@ if __name__ == "__main__":
 
     for question in tqdm(small_set_questions):
         answer = qa.execute_query(question.first_sentence)
-        
-
-
-    
-
