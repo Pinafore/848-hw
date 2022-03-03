@@ -15,7 +15,7 @@ The goal of this assignment is to develop an end to end QA system over QuizBowl 
     2. Rerank the top guesses using a BERT based **Reranker** and output the best page.
 2. **An answer extractor** that takes in a question text, a reference text (page content) and finds a span within the reference text that is the answer to the input question.
 
-The performace of the system will be measured using two metrics:
+The performance of the system will be measured using two metrics:
 * mean accuracy over **_Exact Match_** (1 point if the prediction exactly matches the answer), and
 * mean **_F1 score_** (over the answer tokens and prediction tokens). 
 
@@ -144,6 +144,10 @@ results.
 How to Turn in Your System
 ---------------------------
 ```
+- qb_system.py
+- models.py
+- base_models.py
+- ... any other dependent modules of qb_system.py
 - models/
     |-- tfidf.pickle
     --- ...other saved models...
