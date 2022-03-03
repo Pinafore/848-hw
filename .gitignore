@@ -16,3 +16,5 @@ qanta.*.json
 
 .vscode
 .DS_Store
+
+sol_gen.py

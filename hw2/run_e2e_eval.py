@@ -6,7 +6,8 @@ import json
 from tqdm import tqdm
 from eval_utils import compute_em, compute_f1
 from qbdata import QantaDatabase, Question
-from qb_system import QuizBowlSystem
+# from qb_system import QuizBowlSystem
+QuizBowlSystem = list
 
 from typing import Iterable, Mapping
 
@@ -88,9 +89,9 @@ def compute_retieval_metrics(prediction_dict: Mapping, questions: Iterable[Quest
 
 def compute_metrics(prediction_dict: Mapping, questions: Iterable[Question]):
     N = 0
-    em = 0
-    f1 = 0
-    ret_accuracy = 0
+    em = 0.0
+    f1 = 0.0
+    ret_accuracy = 0.0
     
     for ques in questions:
         N += 1
@@ -98,10 +99,6 @@ def compute_metrics(prediction_dict: Mapping, questions: Iterable[Question]):
         if ques.qanta_id in prediction_dict:
             a_pred = prediction_dict[ques.qanta_id]['answer']
             p_pred = prediction_dict[ques.qanta_id]['page']
-            print(ques.first_sentence)
-            print(ques.sentences[-1])
-            print([a_pred, p_pred], answers_gold, ques.page)
-            print('')
             em += compute_em_multiple_answers(answers_gold, a_pred)
             f1 += compute_f1_multiple_answers(answers_gold, a_pred)
             ret_accuracy += 1 if ques.page == p_pred else 0
