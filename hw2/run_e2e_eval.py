@@ -6,8 +6,7 @@ import json
 from tqdm import tqdm
 from eval_utils import compute_em, compute_f1
 from qbdata import QantaDatabase, Question
-# from qb_system import QuizBowlSystem
-QuizBowlSystem = list
+from qb_system import QuizBowlSystem
 
 from typing import Iterable, Mapping
 
