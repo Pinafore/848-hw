@@ -15,7 +15,7 @@ GUESSER_MODEL_PATH = 'models/tfidf.pickle'
 
 def save_json(json_object: Mapping, filename: str):
     with open(f'outputs/{filename}', 'w') as fp:
-        json.dump(pred_dict, fp, indent=4)
+        json.dump(json_object, fp, indent=4)
 
 
 def compute_em_multiple_answers(answers_gold: Iterable[str], answer_pred:str):
