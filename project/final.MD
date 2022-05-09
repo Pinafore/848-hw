@@ -2,7 +2,7 @@
 Where to Submit
 ===============
 
-This must be submitted to Gradescop and *ON TIME*.  
+This must be submitted to Gradescope and *ON TIME*.  
 
 Cover Letter
 =============
