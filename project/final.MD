@@ -15,7 +15,7 @@ It could be that your cover letter just says:
 
 I Have a Teammate Who Didn't Do Anything
 ========================================
-If your team cannot agree on a consensus cover letter, each member can submit their own cover letter.  However, do not duplicate the rest of the submission (e.g., 
+If your team cannot agree on a consensus cover letter, each member can submit their own cover letter.  However, do not duplicate the rest of the submission (e.g., every team member can upload a cover letter but there's only one project ... or {A, B} upload one cover letter, C uploads another, but there's still only one writeup).
 
 What to Upload
 ===============
